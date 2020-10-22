@@ -1,0 +1,439 @@
+
+<head>
+
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+<style>
+/* body {
+background-image: url('https://businessfirstfamily.com/wp-content/uploads/2015/10/Asset-Management-name-plate.jpg');
+background-size:cover;
+} */
+
+#search {
+position: fixed;
+top: 10px;
+left: 600px;
+width: 40%;
+height: 70%;
+background-color: lightblue;
+
+-webkit-transition: all 0.5s ease-in-out;
+-moz-transition: all 0.5s ease-in-out;
+-o-transition: all 0.5s ease-in-out;
+-ms-transition: all 0.5s ease-in-out;
+transition: all 0.5s ease-in-out;
+
+-webkit-transform: translate(0px, -100%) scale(0, 0);
+-moz-transform: translate(0px, -100%) scale(0, 0);
+-o-transform: translate(0px, -100%) scale(0, 0);
+-ms-transform: translate(0px, -100%) scale(0, 0);
+transform: translate(0px, -100%) scale(0, 0);
+
+opacity: 0;
+}
+
+#search.open {
+-webkit-transform: translate(0px, 0px) scale(1, 1);
+-moz-transform: translate(0px, 0px) scale(1, 1);
+-o-transform: translate(0px, 0px) scale(1, 1);
+-ms-transform: translate(0px, 0px) scale(1, 1);
+transform: translate(0px, 0px) scale(1, 1);
+opacity: 1;
+}
+#labelForDate{
+position: absolute;
+top: 22%;
+width: 100%;
+color: rgb(255, 255, 255);
+background: rgba(0, 0, 0, 0.7);
+font-size: 20px;
+font-weight: 300;
+text-align: center;
+border: 4px solid white;
+margin: 0px auto;
+margin-top: -51px;
+padding-left: 30px;
+padding-right: 0px;
+outline: white;
+
+}
+
+
+#date1{
+
+position: absolute;
+top: 40%;
+width: 100%;
+color: black;
+background: rgba(0, 0, 0, 0);
+font-size: 40px;
+font-weight: 300;
+text-align: center;
+border: 1px solid blue;
+margin: 0px auto;
+margin-top: -51px;
+padding-left: 30px;
+padding-right: 0px;
+outline: none;
+
+
+}
+/* ::-webkit-calendar-picker-indicator {
+filter: invert(7);
+
+} */
+
+::-webkit-calendar-picker-indicator {
+
+content: '';
+display: block;
+color: rgba(0, 0, 0, 0);
+background-image: url("https://thumbs.dreamstime.com/b/glowing-neon-line-calendar-icon-isolated-black-background-event-reminder-symbol-vector-illustration-190868684.jpg");
+
+}
+#date2{
+position: absolute;
+top: 70%;
+width: 100%;
+color: black;
+background: rgba(0, 0, 0, 0);
+font-size: 40px;
+font-weight: 300;
+text-align: center;
+border: 1px solid blue;
+margin: 0px auto;
+margin-top: -51px;
+padding-left: 30px;
+padding-right: 0px;
+outline: none;
+}
+
+
+#search #s {
+position: absolute;
+top: 70%;
+left: 50%;
+margin-top: 34px;
+margin-left: -45px;
+color: #fff;
+background-color: lightblue;
+border-color: lightblue;
+opacity: 1;
+padding: 10px 17px;
+font-size: 27px;
+}
+#search .close {
+position: fixed;
+top: 0px;
+right: 15px;
+color: #fff;
+background-color: lightblue;
+border-color: lightblue;
+opacity: 1;
+padding: 10px 17px;
+font-size: 27px;
+}
+h2{color:;lightblue}
+
+body {
+font-family: Arial;
+font-size: 17px;
+}
+
+th{
+  background-color:#3370ff;
+}
+td, th {
+  border: 1px solid lightblue;
+  text-align: left;
+  padding: 8px;
+}
+
+
+
+
+
+
+.table tbody tr:nth-child(even){
+background-color: lightblue;
+}
+.table tbody tr:nth-child(odd){
+background-color: white;
+}
+.table thead tr{
+background-color:lightblue;
+}
+.table{
+color:black;
+background: #00000000;
+background: rgba(0, 0, 0, 0.7);
+cursor: auto;
+/ margin-left: -100px; /
+
+/ position:absolute;top:200px;left:-100px; /
+}
+
+#r{
+position:fixed;
+top:70px;
+right:400px;
+}
+#r1 {
+position:fixed;
+top:100px;
+right:400px;
+}
+
+.alert{
+color:lightgreen;
+background: #00000000;
+background: rgba(0, 0, 0, 0.7);
+width: 600px;
+cursor: auto;
+}
+.link1{
+color:black;cursor: pointer;
+text-decoration: underline;font-size: 20px;
+position:absolute;top:60px;
+left:1052px;text-decoration-color: lightblue;text-decoration-style: double;background-color: #00ffbf;
+
+}
+.link2{
+color:black;cursor: pointer;
+text-decoration: underline;font-size: 20px;background-color: #00bfff;
+position:absolute;top:60px;left:870px;text-decoration-color: lightblue;text-decoration-style: double;
+
+}
+
+</style>
+</head>
+
+<script>
+$(document).ready(function () {
+
+// $("#msg").hide()
+// $.getJSON('checkfilter').then(res => {
+// console.log(res);
+// });
+//ajax code for all data display on page loading
+var filter = $("#filter").val()
+var mydata = "filter=" + filter;
+$.ajax({
+url: '/filterdata',
+data: mydata,
+type: 'get',
+success: function (res) {
+console.log(res)
+var tableDataRow = '';
+var tableDataRow1 = '';
+var totalhostingcharge=0;
+var totaldomaincharge=0;
+var grandtotal=0;
+
+for (var i = 0; i < res.data.length; i++) {
+totalhostingcharge=totalhostingcharge+parseInt(res.data[i].hosting)
+totaldomaincharge=totaldomaincharge+(res.data[i].domain_charge-" ")
+grandtotal=grandtotal+parseInt(res.data[i].total)
+var e=new Date(res.data[i].expiry)
+var r=new Date(res.data[i].registration)
+tableDataRow = tableDataRow + "<tr>" +
+"<td>" + res.data[i].name + "</td>" +
+"<td>" + res.data[i].domain_taken + "</td>" +
+"<td>" + res.data[i].domain_charge + "</td>" +
+"<td>" + res.data[i].hosting + "</td>" +
+"<td>" + res.data[i].total + "</td>" +
+"</tr>"
+$("#td").html(tableDataRow)
+// $("#msg").hide()
+}
+tableDataRow1 = tableDataRow1 +"<tr>"+"<td>"+" " +"</td>"+"<td>"+" " +"</td>"+"<td>"+totaldomaincharge+"</td>"+"<td>"+totalhostingcharge+"</td>"+"<td>"+grandtotal+"</td>"+"</tr>"
+$("#td1").html(tableDataRow1)
+$("#msg").html(`<h1 style="color:lightblue"> All transaction :</h1>`)
+}
+})
+
+$(function () {
+$('a[href="#link1"]').on('click', function(event) {
+event.preventDefault();
+$('#search').addClass('open');
+$('#search > form > #date1').focus();
+});
+
+$('#search, #search button.close').on('click keyup', function(event) {
+if (event.target == this || event.target.className == 'close' || event.keyCode == 27) {
+$(this).removeClass('open');
+}
+})
+});
+
+// ajax code to get the transection between two dates
+$('form').submit(function(event) {
+event.preventDefault();
+$("#search").removeClass('open');
+var date1 = $("#date1").val()
+var date2 = $("#date2").val()
+var mydata = "date1=" + date1 +"&date2="+ date2;
+
+$.ajax({
+url: '/transectionajax',
+data: mydata,
+type: 'get',
+success: function (res) {
+console.log("res"+res)
+
+if (res.data) {
+
+var tableDataRow = '';
+var tableDataRow1 = '';
+var totalhostingcharge=0;
+var totaldomaincharge=0;
+var grandtotal=0;
+for (var i = 0; i < res.data.length; i++) {
+totalhostingcharge=totalhostingcharge+parseInt(res.data[i].hosting)
+totaldomaincharge=totaldomaincharge+(res.data[i].domain_charge-" ")
+grandtotal=grandtotal+parseInt(res.data[i].total)
+var e=new Date(res.data[i].expiry)
+var r=new Date(res.data[i].registration)
+tableDataRow = tableDataRow + "<tr>" +
+"<td>" + res.data[i].name + "</td>" +
+"<td>" + res.data[i].domain_taken + "</td>" +
+"<td>" + res.data[i].domain_charge + "</td>" +
+"<td>" + res.data[i].hosting + "</td>" +
+"<td>" + res.data[i].total + "</td>" +
+"</tr>"
+$("#td").html(tableDataRow)
+}
+
+tableDataRow1 = tableDataRow1 +"<tr>"+"<td>"+" " +"</td>"+"<td>"+" " +"</td>"+"<td>"+totaldomaincharge+"</td>"+"<td>"+totalhostingcharge+"</td>"+"<td>"+grandtotal+"</td>"+"</tr>"
+$("#td1").html(tableDataRow1)
+// $("#msg").show()
+$("#msg").html(`<h2 style="color:lightblue"> transection between ${date1} and ${date2} :</h2>`)
+event.target.reset()
+}
+else{
+var tableDataRow=""
+var tableDataRow1=""
+var noData = "<h1 style=\"color:red\">"+ "No Data Found"+"</h1>";
+// $("#msg").show()
+$("#msg").html(noData)
+$("#td").html(tableDataRow)
+$("#td1").html(tableDataRow1)
+
+event.target.reset()
+}
+}
+})
+});
+//ajax code for all data display on click
+$('a[href="#link2"]').on('click', function(event) {
+event.preventDefault();
+$.ajax({
+url: '/filterdata',
+data: mydata,
+type: 'get',
+success: function (res) {
+console.log(res)
+var tableDataRow = '';
+var tableDataRow1 = '';
+var totalhostingcharge=0;
+var totaldomaincharge=0;
+var grandtotal=0;
+
+for (var i = 0; i < res.data.length; i++) {
+totalhostingcharge=totalhostingcharge+parseInt(res.data[i].hosting)
+totaldomaincharge=totaldomaincharge+(res.data[i].domain_charge-" ")
+grandtotal=grandtotal+parseInt(res.data[i].total)
+var e=new Date(res.data[i].expiry)
+var r=new Date(res.data[i].registration)
+tableDataRow = tableDataRow + "<tr>" +
+"<td>" + res.data[i].name + "</td>" +
+"<td>" + res.data[i].domain_taken + "</td>" +
+"<td>" + res.data[i].domain_charge + "</td>" +
+"<td>" + res.data[i].hosting + "</td>" +
+"<td>" + res.data[i].total + "</td>" +
+"</tr>"
+$("#td").html(tableDataRow)
+}
+
+tableDataRow1 = tableDataRow1 +"<tr>"+"<td>"+" " +"</td>"+"<td>"+" " +"</td>"+"<td>"+totaldomaincharge+"</td>"+"<td>"+totalhostingcharge+"</td>"+"<td>"+grandtotal+"</td>"+"</tr>"
+$("#msg").html(`<h1 style="color:lightblue"> All transaction </h1>`)
+$("#td1").html(tableDataRow1)
+}
+})
+})
+
+});
+
+</script>
+
+
+<body>
+
+{{#if msg}}
+<div class="alert alert-success alert-dismissible">
+<a style="color:white; float:right;" href="#" data-dismiss="alert">&times;</a>
+{{msg}}</div>{{/if}}
+
+
+<h2><a class="link1 btn btn-success btn-lg" href="#link1">View transaction between dates</a></h2>
+<h2><a class="link2 btn btn-info btn-lg" href="#link2">All transaction</a></h2>
+
+<div id="search">
+<button type="button" class="close">×</button>
+<form>
+<label for="search" id='labelForDate'>Enter dates to see transactions between :</label>
+<input type="date" value="" id='date1' placeholder="" required/>
+<input type="date" value="" id='date2' placeholder="" required/>
+<button type="submit" id="s">Search</button>
+</form>
+</div>
+<!--
+<div class="filt">
+<h3>Search by filter</h3> -->
+
+
+<!-- </div> -->
+
+<div id="msg"></div>
+
+<!-- <div class="table-responsive-md "> -->
+<!-- <table class="table"> -->
+<!-- <div style="overflow-x: auto;"> -->
+<table class="table" border="1px" style="">
+<thead class="thead-dark">
+<tr>
+<!-- <th >Customer_id</th> -->
+
+<th>Customer_name</th>
+<!-- <th>Domain_name</th> -->
+<!-- <th>Plan_name</th>
+<th>Resister_date</th>
+<th>Time_period</th>
+<th >Expiry_date</th>-->
+<th >Domain_taken</th>
+<th >Domain_charges</th>
+<th>Hosting_charges</th>
+<th>Total_charges</th>
+
+</tr>
+</thead>
+<tbody id="td">
+
+</tbody>
+<thead class="thead-dark">
+<tr><th></th><th></th><th>Total domain charge</th><th>Total hosting charge</th><th>Grand Total</th></tr>
+</thead>
+<tbody id="td1">
+
+</tbody>
+
+</table>
+
+
+
+
+</body>

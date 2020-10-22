@@ -1,0 +1,177 @@
+<html>
+<head>
+<style>
+
+.input-container {
+  margin-bottom: 15px;
+}
+.container .content {
+  position: center;
+  top: 0;
+  background: lightblue; / Fallback color /
+  background: black; / Black background with 0.5 opacity /
+  color: black;
+  width: 100%;
+  padding: 20px;
+}
+
+
+
+.input-field {
+  width: 50%;
+  padding:5px;
+  outline: none;
+
+}
+
+
+/* Set a style for the submit button */
+.btn {
+  background-color: #0076ff;
+  color: black;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  width:30%;
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 2;
+}
+</style>
+
+<script>
+
+$(document).ready(function(){
+
+  //hide and show of domain charges
+          $("#dcharge").hide()
+          $("#dtaken").change(()=>{
+          var value=$("#dtaken").val()
+            if (value=="yes"){
+              $("#dcharge").show()  }
+            else if(value=="no"){
+              $("#dcharge").hide()
+                     }
+            })
+
+  //register date getting from system
+                      var curdate=new Date()
+                      $("#rdate").val(curdate.toLocaleString())
+
+
+  //calcualte registter date + timeperiod =expiry Date
+  $("#time").on("input",()=>{
+            var curdate=new Date()
+            var tperiod=$("#time").val()
+            curdate.setYear(curdate.getFullYear()+(tperiod-""))
+            $("#exp").val(curdate.toLocaleString())
+                })
+
+
+//calculation on imput of hcahrges suming all in tcharges:
+$("#hcharges").on("input",()=>{
+              var h=$("#hcharges").val();
+              var d=$("#dcharges").val();
+              var tperiod=$("#time").val()
+              var t=((h-"")+(d-""))*tperiod-"";
+              $("#tcharges").val(t);
+
+            })
+
+
+
+})
+
+
+</script>
+
+</head>
+<body>
+  {{#if msg}}
+<div class="alert alert-success alert-dismissible">
+<a style="color:black; float:right;" href="#" data-dismiss="alert">&times;</a>
+{{msg}}</div>{{/if}}
+<div class="container">
+<div class="content">
+
+            <form action="/addaccount" method="Post">
+            <h4>Enter respective informations given below in the fields:</h4>
+
+    <div class="input-container">
+          <div class="form-row" >
+                    <div class="form-group col-md-6">
+                          Choose Customer: <select class="input-field" type="text" placeholder="Choose Customer" name="customer">
+                                            <option>select asset</option>
+                                            {{#each data1}}
+                                            <option value="{{this.customerId}},{{this.firstname}}">{{this.firstname}}</option>
+                                            {{/each}}
+                                           </select >
+
+                    </div>
+                    <div class="form-group col-md-6">
+                          Domain Name:<input type="text" name="domain">
+                    </div>
+          </div>
+
+          <div class="form-row" >
+                <div class="form-group col-md-6">
+                     Plan:<select class="input-field" placeholder="dropdown"   name="plan" required>
+                          <option>Select Asset</option>
+                                {{#each data2}}
+                          <option values="{{this.planname}}">{{this.planname}}Charges: Rs.{{this.charges}}-/</option>
+                                {{/each}}
+                          </select>
+                 </div>
+
+                <div class="form-group col-md-6">
+                      Domain taken (yes or no):<select  class="input-field" id="dtaken" placeholder="dropdown"  name="domaintaken" required>
+                                                <option>select</option>
+                                                <option>yes</option>
+                                                <option>no</option>
+                                                </select>
+                 </div>
+          </div>
+
+          <div class="form-row" >
+                <div class="form-group col-md-6">
+                      Register date:<input type="text"  class="input-field" id="rdate" placeholder="Enter registration Date" name="register" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                      Time period (in years): <input type="text"  class="input-field" id="time" placeholder="Enter time period " name="time" required>
+                </div>
+          </div>
+
+
+          <div class="form-row" >
+                <div class="form-group col-md-6">
+                      Expiry date:<input type="text"  class="input-field" id="exp" placeholder="Enter expiry Date" name="expiry" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                      <div id="dcharge">
+                          Domain charges:  <input type="text" class="input-field" id="dcharges" placeholder="Enter domain charge" name="dcharge" >
+                      </div>
+                </div>
+          </div>
+
+          <div class="form-row" >
+                <div class="form-group col-md-6">
+                      Hosting charges: <input type="text" class="input-field" placeholder="Enter hosting charge" id="hcharges" name="hcharge" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                      Total charges: <input type="text" class="input-field"  placeholder="Enter total charge" id="tcharges" name="tcharge" required>
+                </div>
+          </div>
+
+  <button type="submit" class="btn">Submit</button>
+
+</form>
+</div>
+</div>
+</div>
+</body>
+</html>

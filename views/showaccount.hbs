@@ -1,0 +1,346 @@
+
+<head>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+
+
+
+    th{
+      background-color:#3370ff;
+    }
+    td, th {
+      border: 1px solid lightblue;
+      text-align: left;
+      padding: 8px;
+    }
+
+    /* body {
+      background-image: url('https://businessfirstfamily.com/wp-content/uploads/2015/10/Asset-Management-name-plate.jpg');
+       background-size:cover;
+    } */
+
+
+
+
+.search-form .form-group {
+  float: right !important;
+  transition: all 0.35s, border-radius 0s;
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+}
+.search-form .form-group input.form-control {
+  padding-right: 20px;
+  border: 0 none;
+  background: transparent;
+  box-shadow: none;
+  display:block;
+}
+.search-form .form-group input.form-control::-webkit-input-placeholder {
+  display: none;
+}
+.search-form .form-group input.form-control:-moz-placeholder {
+   Firefox 18-
+  display: none;
+}
+.search-form .form-group input.form-control::-moz-placeholder {
+  Firefox 19+
+  display: none;
+}
+.search-form .form-group input.form-control:-ms-input-placeholder {
+  display: none;
+}
+.search-form .form-group:hover,
+.search-form .form-group.hover {
+  width: 100%;
+  border-radius: 4px 25px 25px 4px;
+}
+.search-form .form-group span.form-control-feedback {
+  position: absolute;
+  top: -1px;
+  right: -2px;
+  z-index: 2;
+  display: block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  color: #3596e0;
+  left: initial;
+  font-size: 14px;
+}
+
+
+
+
+
+
+
+    h2{color:white}
+
+    body {
+      font-family: Arial;
+      font-size: 17px;
+    }
+
+    .table tbody tr:nth-child(even){
+      background-color: lightblue;
+}
+    .table tbody tr:nth-child(odd){
+      background-color:  white;
+}
+    .table{
+      color:black;
+      background: red;
+      background: rgba(0, 0, 0, 0.7);
+      cursor: auto;
+      / margin-left: -100px; /
+
+      / position:absolute;top:200px;left:-100px; /
+    }
+
+    #r{
+      position:fixed;
+      top:70px;
+      right:400px;
+      }
+    #r1 {
+      position:fixed;
+      top:100px;
+      right:400px;
+       }
+
+    .alert{
+      color:lightgreen;
+      background: #00000000;
+      background: rgba(0, 0, 0, 0.7);
+      width: 600px;
+      cursor: auto;
+    }
+
+    </style>
+</head>
+
+    <script>
+      $(document).ready(function () {
+
+          $("#msg").hide()
+          // $.getJSON('checkfilter').then(res => {
+          //        console.log(res);
+          //    });
+//ajax code for all data display on page loading
+      var filter = $("#filter").val()
+      var mydata = "filter=" + filter;
+      $.ajax({
+          url: '/filterdata',
+          data: mydata,
+          type: 'get',
+          success: function (res) {
+              console.log(res)
+              var tableDataRow = '';
+              for (var i = 0; i < res.data.length; i++) {
+                var e=new Date(res.data[i].expiry)
+                var r=new Date(res.data[i].registration)
+                  tableDataRow = tableDataRow + "<tr>" +
+                      "<td>" + res.data[i].customer_id + "</td>" +
+                       "<td>" + res.data[i].name + "</td>" +
+                      "<td>" + res.data[i].domain_name + "</td>" +
+                      "<td>" + res.data[i].plan+ "</td>" +
+                      "<td>" + r.toDateString() + "</td>" +
+                      "<td>" + res.data[i].time_period + "</td>" +
+                      "<td>" + e.toDateString() + "</td>" +
+                      "<td>" + res.data[i].domain_taken + "</td>" +
+                      "<td>" + res.data[i].domain_charge + "</td>" +
+                      "<td>" + res.data[i].hosting + "</td>" +
+                      "<td>" + res.data[i].total + "</td>" +
+                      "</tr>"
+
+                      $("#td").html(tableDataRow)
+                      $("#msg").hide()
+                }
+              }
+                })
+
+      // ajax code to get the data by different filters
+        $("#filter").change(function () {
+            var filter = $("#filter").val()
+            var mydata = "filter=" + filter;
+            $.ajax({
+                url: '/filterdata',
+                data: mydata,
+                type: 'get',
+                success: function (res) {
+                    console.log(res)
+                    if (res.data) {
+                        var tableDataRow = '';
+                        for (var i = 0; i < res.data.length; i++) {
+                          var e=new Date(res.data[i].expiry)
+                          var r=new Date(res.data[i].registration)
+                            tableDataRow = tableDataRow + "<tr>" +
+                            "<td>" + res.data[i].customer_id + "</td>" +
+                             "<td>" + res.data[i].name + "</td>" +
+                            "<td>" + res.data[i].domain_name + "</td>" +
+                            "<td>" + res.data[i].plan+ "</td>" +
+                            "<td>" +  r.toDateString() + "</td>" +
+                            "<td>" + res.data[i].time_period + "</td>" +
+                            "<td>" + e.toDateString() + "</td>" +
+                            "<td>" + res.data[i].domain_taken + "</td>" +
+                            "<td>" + res.data[i].domain_charge + "</td>" +
+                            "<td>" + res.data[i].hosting + "</td>" +
+                            "<td>" + res.data[i].total + "</td>" +
+                            "</tr>"
+                            $("#td").html(tableDataRow)
+                            $("#msg").hide()
+                        }
+    } else {
+      var tableDataRow=""
+     var noData = "<h1 style=\"color:red\">"+ "No Data Found"+"</h1>";
+     $("#msg").show()
+        $("#msg").html(noData)
+        $("#td").html(tableDataRow)
+
+                    }
+
+                }
+            });
+        });
+
+
+    // ajax code to get data by name
+       $("#text").keyup(function () {
+          var text = $("#text").val()
+          var mydata = "text=" + text;
+          $.ajax({
+              url: '/filterdata',
+              data: mydata,
+              type: 'get',
+              success: function (res) {
+                  console.log(res)
+                  if (res.data) {
+                      var tableDataRow = '';
+                      for (var i = 0; i < res.data.length; i++) {
+                        var e=new Date(res.data[i].expiry)
+                        var r=new Date(res.data[i].registration)
+                        tableDataRow = tableDataRow + "<tr>" +
+                            "<td>" + res.data[i].customer_id + "</td>" +
+                             "<td>" + res.data[i].name + "</td>" +
+                            "<td>" + res.data[i].domain_name + "</td>" +
+                            "<td>" + res.data[i].plan+ "</td>" +
+                            "<td>" + r.toDateString() + "</td>" +
+                            "<td>" + res.data[i].time_period + "</td>" +
+                            "<td>" + e.toDateString() + "</td>" +
+                            "<td>" + res.data[i].domain_taken + "</td>" +
+                            "<td>" + res.data[i].domain_charge + "</td>" +
+                            "<td>" + res.data[i].hosting + "</td>" +
+                            "<td>" + res.data[i].total + "</td>" +
+                            "</tr>"
+
+                          $("#td").html(tableDataRow)
+                          $("#msg").hide()
+                      }
+                  }
+   else {
+       var tableDataRow=""
+       var noData = "<h1 style=\"color:red\">"+ "No Matches Found"+"</h1>";
+       $("#msg").show()
+    $("#msg").html(noData)
+    $("#td").html(tableDataRow)
+
+
+                  }
+
+              }
+          });
+      });
+  });
+
+  </script>
+
+
+<body>
+
+  {{#if msg}}
+  <div class="alert alert-success alert-dismissible">
+  <a style="color:white; float:right;" href="#" data-dismiss="alert">&times;</a>
+  {{msg}}</div>{{/if}}
+
+     <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+            <b style="color:white">Search Account By Name :</b>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-0">
+
+            <form action="" class="search-form">
+
+                <div class="form-group has-feedback">
+
+            		<label for="search" class="sr-only">ffffffff</label>
+            		<input type="text" class="form-control" name="search" id="text" placeholder="search">
+              		<span class="glyphicon glyphicon-search form-control-feedback"></span>
+            	</div>
+            </form>
+          </div>
+            </div>
+           <div id="r" class="row">
+          <div class="col-md-12 col-md-offset-8">
+              <b style="color:white" >Filter Account :</b>
+          </div>
+          </div>
+          <div id="r1" class="row">
+            <div class="col-md-12 col-md-offset-8">
+            <select id='filter'class="form-control" required>
+
+                <option>all</option>
+                <option>upcoming expiry</option>
+                <option>current month expiry</option>
+
+            </select>
+        </div>
+    </div>
+
+            </br>
+  <div id="msg"></div>
+
+  <!-- <div class="table-responsive-md "> -->
+    <!-- <table class="table"> -->
+    <div style="overflow-x: auto;">
+      <table class="table" border="1px" style="">
+      <thead class="thead-dark">
+        <tr>
+          <th >Customer_id</th>
+
+          <th>Customer_name</th>
+          <th>Domain_name</th>
+          <th>Plan_name</th>
+          <th>Register_date</th>
+          <th>Time_period</th>
+          <th >Expiry_date</th>
+          <th >Domain_taken</th>
+          <th >Domain_charges</th>
+          <th>Hosting_charges</th>
+          <th >Total_charges</th>
+          <th></th>
+       </tr>
+     </thead>
+     <tbody id="td">
+
+     </tbody>
+
+  </table>
+
+</div>
+
+
+</body>

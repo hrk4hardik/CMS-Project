@@ -1,0 +1,44 @@
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+th{
+  background-color:#3370ff;
+}
+td, th {
+  border: 1px solid lightblue;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: lightblue;
+}
+</style>
+</head>
+<body>
+
+    {{#if msg}}
+  <div class="alert alert-success alert-dismissible">
+    <a style="color:white; float:right;" href="#" data-dismiss="alert">&times;</a>
+    {{msg}}</div>{{/if}}
+<table class='table' border='1'>
+  <tr><th>Plan Id</th><th>Plan Name</th><th>Charges</th><th>Delete</th><th>Edit</th></tr>
+{{#each data}}
+ <tr>
+      <td>{{this.planid}}</td>
+      <td>{{this.planname}}</td>
+      <td>Rs.{{this.charges}}/-</td>
+
+      <td><a href="/deleteplan?planid={{this.planid}}" onClick="return confirm('do you really want to delete?')">delete</a></td>
+      <td><a href="/upplan?planid={{this.planid}}" onClick="return confirm('do you really want to update?')">edit</a></td>
+
+ </tr>
+
+{{/each}}
+
+ </table>
+</body>

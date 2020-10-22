@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Cms</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-default">
+<div class="container-fluid">
+
+<!-- BRAND -->
+<div class="navbar-header">
+<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#alignment-example" aria-expanded="false">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="#">Server Management</a>
+</div>
+
+<!-- COLLAPSIBLE NAVBAR -->
+<div class="collapse navbar-collapse" id="alignment-example">
+
+<!-- Links -->{{#if admin}}
+<ul class="nav navbar-nav">
+<li class="active"><a href="/home">Home<span class="sr-only">(current)</span></a></li>
+<li><a href="/addcustomer">AddNewCustomer</a></li>
+                <li><a href="/showcustomer">ViewAllCustomer</a></li>
+                <li><a href="/addp">AddPlans</a></li>
+                <li><a href="/showplan">ViewAllPlans</a></li>
+                <li><a href="/addac">AddNewAccount</a></li>
+                <li><a href="/showaccount">ViewAllAccount</a></li>
+                <li><a href="/showtransactionhistory">ViewTransHistory</a></li>
+                <li><a href="/alogout"><span class="glyphicon glyphicon-log-out"></span>logout</a></li>
+</ul>
+{{/if}}
+
+</div>
+
+</div>
+</nav>
+<div class="container">
+  {{{body}}}
+</div>
+
+</body>
+</html>

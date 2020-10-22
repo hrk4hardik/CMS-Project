@@ -1,0 +1,39 @@
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+th{
+  background-color:#3370ff;
+}
+td, th {
+  border: 1px solid lightblue;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: lightblue;
+}
+</style>
+</head>
+<body>{{#if msg}}{{msg}}{{/if}}
+
+  <table class='table' border='2'>
+  <tr><th>First Name</th><th>last Name</th><th>Email</th><th>Mobile No.</th><th>Delete</th><th>Edit</th></tr>
+{{#each data}}
+ <tr>
+      <td>{{this.firstname}}</td>
+      <td>{{this.lastname}}</td>
+      <td>{{this.email}}</td>
+      <td>{{this.mobileno}}</td>
+      <td><a href="/deletecustomer?id={{this.customerId}}" onClick="return confirm('do you really want to delete?')">Delete</a></td>
+      <td><a href="/editcust?id={{this.customerId}}" onClick="return confirm('do you really want to update?')">Edit</a></td>
+
+ </tr>
+
+{{/each}}
+
+ </table>
